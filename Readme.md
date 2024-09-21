@@ -108,3 +108,38 @@ app.get("/products", (req, res) => {
   // En este caso estamos enviando un objeto con los datos de un producto.
 });
 ```
+
+## API REST
+
+## ¿Qué es REST (Representational State Transfer)?
+
+REST es un conjunto de convenciones para crear servicios web que permiten la comunicación entre el cliente y el servidor a través del protocolo HTTP. Es uno de los enfoques más utilizados para desarrollar APIs por su simplicidad y escalabilidad.
+
+Una API RESTful sigue estos principios, utilizando recursos y métodos HTTP estándar para realizar operaciones como obtener, crear, modificar o eliminar datos.
+
+### Métodos HTTP en una API REST
+
+Los métodos HTTP definen las acciones que se pueden realizar sobre los recursos (datos) en una API REST. Los más comunes son:
+
+- **GET**: Se utiliza para obtener o solicitar información.  
+  _Ejemplo_: Obtener una lista de productos desde el servidor.
+- **PUT**: Sirve para modificar recursos existentes, generalmente identificado por un ID.  
+  _Ejemplo_: Actualizar los datos de un producto específico.
+- **POST**: Se usa para crear nuevos recursos como información, productos, categorías, etc.  
+  _Ejemplo_: Añadir un nuevo producto a la base de datos.
+- **DELETE**: Permite eliminar recursos.  
+  _Ejemplo_: Eliminar un producto de la base de datos.
+
+### Convenciones en una API RESTful
+
+- **URLs como recursos**: En una API RESTful, las URLs (endpoints) representan recursos o colecciones de recursos. Por ejemplo:
+
+  - `/products`: Representa una colección de productos.
+  - `/products/1`: Representa un producto específico identificado por el ID 1.
+
+- **Uso de verbos HTTP**: La interacción con los recursos se realiza a través de los verbos HTTP (GET, POST, PUT, DELETE) en lugar de incluir la acción en la URL.  
+  _Ejemplo_: En lugar de usar `/deleteProduct/1`, se usaría `DELETE /products/1`.
+
+- **Respuestas en formato JSON**: Aunque REST no está limitado a un formato en particular, es común que las APIs RESTful utilicen JSON para enviar y recibir datos, ya que es legible y fácil de procesar por la mayoría de los lenguajes de programación.
+
+- **Sin estado (Stateless)**: Las solicitudes entre el cliente y el servidor son independientes; cada petición debe contener toda la información necesaria para procesarla. El servidor no guarda estado entre peticiones, lo que hace las APIs REST más escalables.
