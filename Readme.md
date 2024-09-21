@@ -79,9 +79,26 @@ app.get("/nueva-ruta", (req, res) => {
   // El método send() envía una respuesta de texto simple al cliente.
 });
 
-// Ruta GET para el endpoint '/products'
-// Aquí el servidor responde con un objeto JSON, que es un formato estándar para estructurar datos.
-// Los datos JSON son muy utilizados en APIs porque son fáciles de leer y procesar por máquinas y humanos.
+//
+//
+//
+app.get("/products", (req, res) => {
+  res.json({
+    name: "Producto 1",
+    price: 50000,
+  });
+  // El método json() envía una respuesta en formato JSON, muy útil cuando trabajamos con APIs.
+  // En este caso estamos enviando un objeto con los datos de un producto.
+});
+```
+
+#### Ruta GET para el endpoint '/products'
+
+Aquí el servidor responde con un objeto JSON, que es un formato estándar para estructurar datos.
+
+Los datos JSON son muy utilizados en APIs porque son fáciles de leer y procesar por máquinas y humanos.
+
+```javascript
 app.get("/products", (req, res) => {
   res.json({
     name: "Producto 1",
