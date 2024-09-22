@@ -11,7 +11,7 @@ const port = 3000;
 
 //Importamos la libreria FAKER para generar informacion DUMMY en nuestra aplicacion
 const faker = require('faker');
-//const { faker } = require('faker-js/faker');
+//const { faker } = require('@faker-js/faker');
 
 // Definimos una ruta GET para el endpoint raíz ('/')
 // Esta es la ruta básica que el servidor responderá cuando se acceda al dominio principal
