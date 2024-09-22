@@ -143,3 +143,50 @@ Los métodos HTTP definen las acciones que se pueden realizar sobre los recursos
 - **Respuestas en formato JSON**: Aunque REST no está limitado a un formato en particular, es común que las APIs RESTful utilicen JSON para enviar y recibir datos, ya que es legible y fácil de procesar por la mayoría de los lenguajes de programación.
 
 - **Sin estado (Stateless)**: Las solicitudes entre el cliente y el servidor son independientes; cada petición debe contener toda la información necesaria para procesarla. El servidor no guarda estado entre peticiones, lo que hace las APIs REST más escalables.
+
+## Método GET - Recibir Parámetros
+
+### Convención Recomendada
+
+Al construir APIs RESTful, es una buena práctica estructurar las URLs de la siguiente manera:
+
+- `api.example.com/tasks/{id}/`
+- `api.example.com/people/{id}/`
+- `api.example.com/users/{id}/tasks/`
+
+En estos ejemplos, primero se define la entidad y luego se especifica el **ID** correspondiente. Esto proporciona una estructura clara y facilita la identificación del recurso.
+
+### Ejemplo: Obtener el Detalle de un Producto Específico
+
+El siguiente ejemplo muestra cómo definir un endpoint GET para obtener el detalle de un producto mediante un parámetro en la URL:
+
+```javascript
+// Definimos un endpoint para obtener el detalle de un producto específico
+// La sintaxis ":id" indica que estamos utilizando un parámetro dinámico en la URL
+app.get("/products/:id", (req, res) => {
+  // Obtenemos el valor del parámetro "id" desde la solicitud (req.params.id)
+  const id = req.params.id;
+
+  // Alternativamente, podríamos usar desestructuración:
+  // const { id } = req.params;
+
+  // Devolvemos una respuesta en formato JSON con el ID del producto solicitado
+  res.json({
+    id,
+    name: "Product 2", // En un caso real, estos datos serían extraídos de una base de datos
+    price: 350,
+  });
+});
+// Definimos un endpoint que devuelve productos asociados a una categoría específica
+// Aquí la URL maneja dos parámetros dinámicos: categoryId y productId
+app.get("/categories/:categoryId/products/:productId", (req, res) => {
+  // Utilizamos desestructuración para extraer ambos parámetros directamente de req.params
+  const { categoryId, productId } = req.params;
+
+  // Devolvemos una respuesta en formato JSON con los IDs de la categoría y el producto
+  res.json({
+    categoryId, // ID de la categoría del producto
+    productId, // ID específico del producto dentro de esa categoría
+  });
+});
+```

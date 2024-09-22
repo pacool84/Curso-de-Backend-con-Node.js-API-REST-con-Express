@@ -42,10 +42,46 @@ app.get('/nueva-ruta', (req, res) => {
 // Aquí el servidor responde con un objeto JSON, que es un formato estándar para estructurar datos.
 // Los datos JSON son muy utilizados en APIs porque son fáciles de leer y procesar por máquinas y humanos.
 app.get('/products', (req, res) => {
-  res.json({
-    name: 'Producto 1',
-    price: 50000,
-  });
+  res.json([
+    {
+      name: 'Product 1',
+      price: 5000,
+    },
+    {
+      name: 'Product 2',
+      price: 350,
+    },
+  ]);
   // El método json() envía una respuesta en formato JSON, muy útil cuando trabajamos con APIs.
   // En este caso estamos enviando un objeto con los datos de un producto.
+});
+
+// Definimos un endpoint para obtener el detalle de un producto específico
+// La sintaxis ":id" indica que estamos utilizando un parámetro en la URL,
+// es decir, un valor dinámico que será proporcionado por el cliente
+app.get('/products/:id', (req, res) => {
+  // Obtenemos el valor del parámetro "id" desde la solicitud (req.params.id)
+  const id = req.params.id;
+  // Alternativamente, podríamos usar la desestructuración de objetos para obtener el parámetro "id"
+  // const { id } = req.params;
+
+  // Devolvemos una respuesta en formato JSON con el ID del producto solicitado y otros detalles
+  res.json({
+    id,
+    name: 'Product 2', // En un caso real, estos datos serían extraídos de una base de datos
+    price: 350,
+  });
+});
+
+// Definimos un endpoint más complejo que devuelve productos asociados a una categoría específica
+// En este caso, la URL maneja dos parámetros dinámicos: categoryId y productId
+app.get('/categories/:categoryId/products/:productId', (req, res) => {
+  // Utilizamos desestructuración para extraer ambos parámetros directamente de req.params
+  const { categoryId, productId } = req.params;
+
+  // Devolvemos una respuesta en formato JSON con los IDs de la categoría y el producto
+  res.json({
+    categoryId, // ID de la categoría del producto
+    productId, // ID específico del producto dentro de esa categoría
+  });
 });
