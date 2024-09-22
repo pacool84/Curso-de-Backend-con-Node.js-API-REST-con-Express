@@ -9,6 +9,10 @@ const app = express();
 // usar variables de entorno para puertos configurables
 const port = 3000;
 
+//Importamos la libreria FAKER para generar informacion DUMMY en nuestra aplicacion
+const faker = require('faker');
+//const { faker } = require('faker-js/faker');
+
 // Definimos una ruta GET para el endpoint raíz ('/')
 // Esta es la ruta básica que el servidor responderá cuando se acceda al dominio principal
 // 'req' representa el objeto de la solicitud (request) y 'res' representa el objeto de la respuesta (response)
@@ -42,18 +46,24 @@ app.get('/nueva-ruta', (req, res) => {
 // Aquí el servidor responde con un objeto JSON, que es un formato estándar para estructurar datos.
 // Los datos JSON son muy utilizados en APIs porque son fáciles de leer y procesar por máquinas y humanos.
 app.get('/products', (req, res) => {
-  res.json([
-    {
-      name: 'Product 1',
-      price: 5000,
-    },
-    {
-      name: 'Product 2',
-      price: 350,
-    },
-  ]);
+  const { size } = req.query; //Obtenemos query params para poder controlar la cantidad de resultados en este end point
+  const limit = size || 10; //Definimos por default solo mostrar 10 productos
+  //Generamos la información DUMMY de nuestra app
+  const products = [];
+  for (let index = 0; index < limit; index++) {
+    products.push({
+      name: faker.commerce.productName(),
+      price: parseInt(faker.commerce.price(), 10),
+      image: faker.image.imageUrl(),
+    });
+  }
+  res.json(products);
   // El método json() envía una respuesta en formato JSON, muy útil cuando trabajamos con APIs.
   // En este caso estamos enviando un objeto con los datos de un producto.
+});
+
+app.get('/products/filter', (req, res) => {
+  res.send('Yo soy un filter');
 });
 
 // Definimos un endpoint para obtener el detalle de un producto específico
@@ -73,6 +83,14 @@ app.get('/products/:id', (req, res) => {
   });
 });
 
+//Caso de uso, ERROR muy comun en ROUTING
+//En este caso filter lo esta tomando como un parametro
+//Para resolver este caso se debe de considerar "LO ESPECIFICO SIEMPRE ANTES DE LO DINAMICO"
+//Por lo que este end point deberia de colocarse antes que el end point app.get('/products/:id', (req, res) => {}
+/* app.get('/products/filter', (req, res) => {
+  res.send('Yo soy un filter');
+}); */
+
 // Definimos un endpoint más complejo que devuelve productos asociados a una categoría específica
 // En este caso, la URL maneja dos parámetros dinámicos: categoryId y productId
 app.get('/categories/:categoryId/products/:productId', (req, res) => {
@@ -84,4 +102,17 @@ app.get('/categories/:categoryId/products/:productId', (req, res) => {
     categoryId, // ID de la categoría del producto
     productId, // ID específico del producto dentro de esa categoría
   });
+});
+
+//Creando end point con query params
+//Como el parametro es "opcional" NO se debera definir en la ruta
+
+app.get('/users', (req, res) => {
+  //Utilizamos el metodo query para recabar los query params
+  const { limit, offset } = req.query;
+  if (limit && offset) {
+    res.json({ limit, offset });
+  } else {
+    res.send('No hay QUERY PARAMS');
+  }
 });

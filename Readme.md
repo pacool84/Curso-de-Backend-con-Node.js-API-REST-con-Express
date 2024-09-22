@@ -24,7 +24,7 @@ Se han agregado/modificado los siguientes scripts en el archivo `package.json`:
 }
 ```
 
-npm install nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D
+`npm install nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D`
 
 - **nodemon**: Monitorea los cambios en el código fuente y reinicia automáticamente la aplicación en el entorno de desarrollo.
 - **eslint**: Herramienta para el análisis estático del código con el objetivo de encontrar problemas y mantener un código limpio.
@@ -190,3 +190,25 @@ app.get("/categories/:categoryId/products/:productId", (req, res) => {
   });
 });
 ```
+
+## Query Params
+
+Parametros de consulta que usualmente vienen en los metodos GET
+
+La convencion a seguir es:
+
+- `api.example.com/products/`
+- `api.example.com/products/?page=1` (Paginar)
+- `api.example.com/products/?limit=10&offset=0`
+- `api.example.com/products/?region=USA` (Filtrar)
+- `api.example.com/products/?region=USA&brand=XYZ`
+
+### Para este proyecto utilizaremos la libreria FAKER para generar informacion falsa
+
+`npm install faker@5.5.3`
+`const faker = require ('faker')`
+
+Existe otra libreria mas actualizada que es recomendable utilizar para el proyecto
+
+`npm install @faker-js/faker`
+`const {faker} = require('@faker-js/faker')`
