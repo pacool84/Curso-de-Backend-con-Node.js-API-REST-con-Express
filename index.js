@@ -4,14 +4,20 @@ const express = require('express');
 // Inicializamos la aplicación Express, que será la base de nuestro servidor
 const app = express();
 
+//Exportamos la funcion que gestionas TODAS las rutas de nuestra app
+const routerApi = require('./routes/index.js');
+
 // Definimos el puerto en el que nuestra aplicación va a escuchar
 // El puerto 3000 es común para desarrollo, pero en producción es importante
 // usar variables de entorno para puertos configurables
 const port = 3000;
 
 //Importamos la libreria FAKER para generar informacion DUMMY en nuestra aplicacion
-const faker = require('faker');
+//const faker = require('faker');
+
 //const { faker } = require('@faker-js/faker');
+
+routerApi(app); //PASAMOS LA APP A NUESTRO ROUTER PRINCIPAL
 
 // Definimos una ruta GET para el endpoint raíz ('/')
 // Esta es la ruta básica que el servidor responderá cuando se acceda al dominio principal
@@ -42,7 +48,7 @@ app.get('/nueva-ruta', (req, res) => {
   // El método send() envía una respuesta de texto simple al cliente.
 });
 
-// Ruta GET para el endpoint '/products'
+/* // Ruta GET para el endpoint '/products'
 // Aquí el servidor responde con un objeto JSON, que es un formato estándar para estructurar datos.
 // Los datos JSON son muy utilizados en APIs porque son fáciles de leer y procesar por máquinas y humanos.
 app.get('/products', (req, res) => {
@@ -81,7 +87,7 @@ app.get('/products/:id', (req, res) => {
     name: 'Product 2', // En un caso real, estos datos serían extraídos de una base de datos
     price: 350,
   });
-});
+}); */
 
 //Caso de uso, ERROR muy comun en ROUTING
 //En este caso filter lo esta tomando como un parametro
@@ -93,7 +99,7 @@ app.get('/products/:id', (req, res) => {
 
 // Definimos un endpoint más complejo que devuelve productos asociados a una categoría específica
 // En este caso, la URL maneja dos parámetros dinámicos: categoryId y productId
-app.get('/categories/:categoryId/products/:productId', (req, res) => {
+/* app.get('/categories/:categoryId/products/:productId', (req, res) => {
   // Utilizamos desestructuración para extraer ambos parámetros directamente de req.params
   const { categoryId, productId } = req.params;
 
@@ -102,12 +108,12 @@ app.get('/categories/:categoryId/products/:productId', (req, res) => {
     categoryId, // ID de la categoría del producto
     productId, // ID específico del producto dentro de esa categoría
   });
-});
+}); */
 
 //Creando end point con query params
 //Como el parametro es "opcional" NO se debera definir en la ruta
 
-app.get('/users', (req, res) => {
+/* app.get('/users', (req, res) => {
   //Utilizamos el metodo query para recabar los query params
   const { limit, offset } = req.query;
   if (limit && offset) {
@@ -116,3 +122,4 @@ app.get('/users', (req, res) => {
     res.send('No hay QUERY PARAMS');
   }
 });
+ */

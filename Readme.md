@@ -212,3 +212,9 @@ Existe otra libreria mas actualizada que es recomendable utilizar para el proyec
 
 `npm install @faker-js/faker`
 `const {faker} = require('@faker-js/faker')`
+
+## Separación de Responsabilidades con Express Router
+
+### Single Responsibility Principle
+
+Cada artefacto o pieza de codigo debe de tener una unica responsabilidad
