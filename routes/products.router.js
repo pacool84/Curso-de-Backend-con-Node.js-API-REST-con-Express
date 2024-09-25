@@ -30,4 +30,13 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//End Point para gestionar POST / Creacion de un producto
+router.post('/', (req, res) => {
+  const body = req.body;
+  res.json({
+    message: 'created',
+    data: body,
+  });
+});
+
 module.exports = router; //Exportamos el router de este end point

@@ -19,6 +19,9 @@ const routerApi = require('./routes/index.js');
 
 routerApi(app); //PASAMOS LA APP A NUESTRO ROUTER PRINCIPAL
 
+//Implementando MIDDLEWARE nativo de express para trabajar con JSON y metodo POST
+app.use(express.json());
+
 // Definimos una ruta GET para el endpoint raíz ('/')
 // Esta es la ruta básica que el servidor responderá cuando se acceda al dominio principal
 // 'req' representa el objeto de la solicitud (request) y 'res' representa el objeto de la respuesta (response)
