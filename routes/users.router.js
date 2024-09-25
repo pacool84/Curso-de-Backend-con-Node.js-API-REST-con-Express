@@ -1,11 +1,9 @@
 const express = require('express');
-const roputer = express.Router;
-const faker = require('faker');
-const router = require('./products.router');
+const router = express.Router();
 
-router.get('/users', (req, res) => {
+router.get('/', (req, res) => {
   //Utilizamos el metodo query para recabar los query params
-  const { limit, offset } = req.query;
+  const { limit, offset } = req.query; //http://localhost:3000/users?limit=13&offset=200
   if (limit && offset) {
     res.json({ limit, offset });
   } else {

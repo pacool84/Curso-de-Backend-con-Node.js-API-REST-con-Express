@@ -4,9 +4,6 @@ const express = require('express');
 // Inicializamos la aplicación Express, que será la base de nuestro servidor
 const app = express();
 
-//Exportamos la funcion que gestionas TODAS las rutas de nuestra app
-const routerApi = require('./routes/index.js');
-
 // Definimos el puerto en el que nuestra aplicación va a escuchar
 // El puerto 3000 es común para desarrollo, pero en producción es importante
 // usar variables de entorno para puertos configurables
@@ -16,6 +13,9 @@ const port = 3000;
 //const faker = require('faker');
 
 //const { faker } = require('@faker-js/faker');
+
+//Exportamos la funcion que gestionas TODAS las rutas de nuestra app
+const routerApi = require('./routes/index.js');
 
 routerApi(app); //PASAMOS LA APP A NUESTRO ROUTER PRINCIPAL
 

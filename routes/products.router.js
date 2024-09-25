@@ -1,12 +1,12 @@
 const express = require('express');
-const router = express.Router; //Generamos un router para tener acceso a la app
 const faker = require('faker');
+const router = express.Router(); //Generamos un router para tener acceso a la app
 
 //Router especifico para nuestro products
 router.get('/', (req, res) => {
-  const { size } = req.query;
-  const limit = size || 10;
   const products = [];
+  const { size } = req.query; //http://localhost:3000/products?size=1000
+  const limit = size || 10;
   for (let index = 0; index < limit; index++) {
     products.push({
       name: faker.commerce.productName(),
@@ -23,7 +23,6 @@ router.get('/filter', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-
   res.json({
     id,
     name: 'Product 2',
