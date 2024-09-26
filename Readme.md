@@ -218,3 +218,17 @@ Existe otra libreria mas actualizada que es recomendable utilizar para el proyec
 ### Single Responsibility Principle
 
 Cada artefacto o pieza de codigo debe de tener una unica responsabilidad
+
+## Códigos de Estado o HTTP Response status codes
+
+Es un standard que indica que sucede cuando se envía una petición HTTP, dichos codigo funcionan por rango
+-Informational responses (100 - 199)
+-Successfuks Responses (200 - 299)
+-Redirects (300 - 399)
+-Clients Errors (400 - 499)
+-Server Errors (500 - 599)
+
+Los estados importantes en los que nos estaremos enfocando son
+-200 / Ok
+-201 / Created (Generalmente usado en un POST)
+-202 / Accepted

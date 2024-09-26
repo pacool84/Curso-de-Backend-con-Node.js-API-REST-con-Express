@@ -21,19 +21,26 @@ router.get('/filter', (req, res) => {
   res.send('Yo soy un filter');
 });
 
+//Todos los parametros recibidos por el metodo GET, se recibiran como tipo STRING
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-  res.json({
-    id,
-    name: 'Product 2',
-    price: 350,
-  });
+  if (id === '666') {
+    res.status(404).json({
+      message: 'product NOT FOUND - Error 404',
+    });
+  } else {
+    res.status(201).json({
+      id,
+      name: 'Product 2',
+      price: 350,
+    });
+  }
 });
 
 //End Point para gestionar POST / Creacion de un producto
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'Product Created',
     data: body,
   });
