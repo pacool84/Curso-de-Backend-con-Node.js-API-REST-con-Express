@@ -1,4 +1,20 @@
-// Importamos la librería de Express para crear un servidor web de manera sencilla
+const express = require('express');
+const routerApi = require('./routes');
+const app = express();
+const port = 3000;
+app.use(express.json());
+app.get('/', (req, res) => {
+  res.send('Servidor Express Conectado');
+});
+app.get('/nueva-ruta', (req, res) => {
+  res.send('Hola, soy una nueva ruta');
+});
+routerApi(app);
+app.listen(port, () => {
+  console.log('Servidor escuchando en http://localhost:' + port);
+});
+
+/* // Importamos la librería de Express para crear un servidor web de manera sencilla
 const express = require('express');
 
 // Inicializamos la aplicación Express, que será la base de nuestro servidor
