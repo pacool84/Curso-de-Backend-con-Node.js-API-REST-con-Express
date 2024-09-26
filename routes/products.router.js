@@ -39,4 +39,30 @@ router.post('/', (req, res) => {
   });
 });
 
+//End Point para gestionar PATCH / actualizacion "parcial" de un producto
+//La diferencia entre PUT y PATCH es que con PUR deberiamos de actualizar TODOS los atributos del objeto
+
+router.patch('/:id', (req, res) => {
+  const body = req.body;
+  const { id } = req.params;
+
+  res.json({
+    message: 'Product Partial Updated',
+    data: body,
+    id,
+  });
+});
+
+//End Point para gestionar DELETE
+
+router.delete('/:id', (req, res) => {
+  const body = req.body;
+  const { id } = req.params;
+
+  res.json({
+    message: 'Product Deleted',
+    id,
+  });
+});
+
 module.exports = router; //Exportamos el router de este end point
