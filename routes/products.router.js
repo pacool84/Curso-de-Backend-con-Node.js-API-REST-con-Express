@@ -1,19 +1,11 @@
 const express = require('express');
-const faker = require('faker');
+const ProductsService = require('./../Services/product.service');
 const router = express.Router(); //Generamos un router para tener acceso a la app
+const service = new ProductsService(); //Creamos una instancia del servicio
 
 //Router especifico para nuestro products
 router.get('/', (req, res) => {
-  const products = [];
-  const { size } = req.query; //http://localhost:3000/products?size=1000
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl(),
-    });
-  }
+  const products = service.find(); //Mandamos llamar el metodo find del servicio product.service.js
   res.json(products);
 });
 
@@ -23,18 +15,9 @@ router.get('/filter', (req, res) => {
 
 //Todos los parametros recibidos por el metodo GET, se recibiran como tipo STRING
 router.get('/:id', (req, res) => {
-  const id = req.params.id;
-  if (id === '666') {
-    res.status(404).json({
-      message: 'product NOT FOUND - Error 404',
-    });
-  } else {
-    res.status(201).json({
-      id,
-      name: 'Product 2',
-      price: 350,
-    });
-  }
+  const { id } = req.params;
+  const product = service.findOne(id);
+  res.json(product);
 });
 
 //End Point para gestionar POST / Creacion de un producto
