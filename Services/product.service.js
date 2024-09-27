@@ -36,6 +36,32 @@ class ProductsService {
   findOne(id) {
     return this.products.find((item) => item.id === id); //Aqui find es un metodo propio de JS para trabajar con arreglos
   }
+
+  update(id, changes) {
+    const index = this.products.findIndex((item) => item.id === id); //Aqui findIndex es un metodo propio de JS para trabajar con arreglos
+    //Nos aseguramos que el indice o el producto si exista
+    if (index === -1) {
+      throw new Error('Product NOT FOUND');
+    } else {
+      //this.products[index] = changes; Hacerlo de esta forma es un error, ya que reemplazamos TODO el objeto lo que causa es que deje de existir el id o referencias hacia un objeto
+      const product = this.products[index];
+      this.products[index] = {
+        ...product,
+        ...changes,
+      };
+      return this.products[index];
+    }
+  }
+
+  delete(id) {
+    const index = this.products.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new Error('Product NOT FOUND');
+    } else {
+      this.products.splice(index, 1);
+      return { id };
+    }
+  }
 }
 
 module.exports = ProductsService;

@@ -33,12 +33,9 @@ router.post('/', (req, res) => {
 router.patch('/:id', (req, res) => {
   const body = req.body;
   const { id } = req.params;
+  const product = service.update(id, body);
 
-  res.json({
-    message: 'Product Partial Updated',
-    data: body,
-    id,
-  });
+  res.json(product);
 });
 
 //End Point para gestionar DELETE
@@ -46,11 +43,9 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const body = req.body;
   const { id } = req.params;
+  const rta = service.delete(id);
 
-  res.json({
-    message: 'Product Deleted',
-    id,
-  });
+  res.json(rta);
 });
 
 module.exports = router; //Exportamos el router de este end point
