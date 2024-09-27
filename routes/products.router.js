@@ -23,10 +23,8 @@ router.get('/:id', (req, res) => {
 //End Point para gestionar POST / Creacion de un producto
 router.post('/', (req, res) => {
   const body = req.body;
-  res.status(201).json({
-    message: 'Product Created',
-    data: body,
-  });
+  const newProduct = service.create(body);
+  res.status(201).json(newProduct);
 });
 
 //End Point para gestionar PATCH / actualizacion "parcial" de un producto
