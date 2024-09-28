@@ -14,10 +14,14 @@ router.get('/filter', (req, res) => {
 });
 
 //Todos los parametros recibidos por el metodo GET, se recibiran como tipo STRING
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const product = await service.findOne(id);
-  res.json(product);
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await service.findOne(id);
+    res.json(product);
+  } catch (error) {
+    next(error); //Aqui hacemos de manera explicita que vaya y ejecute los Middlewares de tipo error
+  }
 });
 
 //End Point para gestionar POST / Creacion de un producto

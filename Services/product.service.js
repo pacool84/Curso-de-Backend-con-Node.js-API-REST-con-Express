@@ -38,6 +38,7 @@ class ProductsService {
   }
 
   async findOne(id) {
+    const fakeError = this.getTotal();
     return this.products.find((item) => item.id === id); //Aqui find es un metodo propio de JS para trabajar con arreglos
   }
 
