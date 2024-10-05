@@ -1,6 +1,6 @@
 //Los servicios deben de estar sepradados de las rutas por lo que la logica de negocio debe de estar en los servicios
-
 const faker = require('faker');
+const boom = require('@hapi/boom');
 
 class ProductsService {
   constructor() {
@@ -16,6 +16,7 @@ class ProductsService {
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(), 10),
         image: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean(),
       });
     }
   }
@@ -38,15 +39,23 @@ class ProductsService {
   }
 
   async findOne(id) {
-    const fakeError = this.getTotal();
-    return this.products.find((item) => item.id === id); //Aqui find es un metodo propio de JS para trabajar con arreglos
+    const product = this.products.find((item) => item.id === id); //Aqui find es un metodo propio de JS para trabajar con arreglos
+
+    if (!product) {
+      throw boom.notFound('Product NOT FOUND');
+    }
+    if (product.isBlock) {
+      throw boom.conflict('Product is BLOCKED');
+    } else {
+      return product;
+    }
   }
 
   async update(id, changes) {
     const index = this.products.findIndex((item) => item.id === id); //Aqui findIndex es un metodo propio de JS para trabajar con arreglos
     //Nos aseguramos que el indice o el producto si exista
     if (index === -1) {
-      throw new Error('Product NOT FOUND');
+      throw boom.notFound('Product NOT FOUND'); //Error 404
     } else {
       //this.products[index] = changes; Hacerlo de esta forma es un error, ya que reemplazamos TODO el objeto lo que causa es que deje de existir el id o referencias hacia un objeto
       const product = this.products[index];
@@ -61,7 +70,7 @@ class ProductsService {
   async delete(id) {
     const index = this.products.findIndex((item) => item.id === id);
     if (index === -1) {
-      throw new Error('Product NOT FOUND');
+      throw boom.notFound('Product NOT FOUND');
     } else {
       this.products.splice(index, 1);
       return { id };

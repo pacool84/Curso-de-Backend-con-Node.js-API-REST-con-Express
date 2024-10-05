@@ -17,4 +17,14 @@ function errorHandler(err, req, res, next) {
   });
 }
 
-module.exports = { logErrors, errorHandler };
+function BoomErrorHandler(err, req, res, next) {
+  //err.isBoom es como podemos identificar si estamos recibiendo un error de tipo BOOM
+  if (err.isBoom) {
+    const { output } = err; //Boom maneja la informacion del error en el parametro "output"
+    res.status(output.statusCode).json(output.payload);
+  } else {
+    next(err);
+  }
+}
+
+module.exports = { logErrors, errorHandler, BoomErrorHandler };

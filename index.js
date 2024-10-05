@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
 const routerApi = require('./routes');
-const { logErrors, errorHandler } = require('./middlewares/error.handler');
+const {
+  logErrors,
+  errorHandler,
+  BoomErrorHandler,
+} = require('./middlewares/error.handler');
 const port = 3000;
 app.use(express.json());
 app.get('/', (req, res) => {
@@ -15,6 +19,7 @@ routerApi(app);
 //Los Middleware de tipo ERROR, se deben de hacer despues de definir el ROUTING
 //Es importante considerar el orden en el que se van a ejecutar los Middlewares
 app.use(logErrors);
+app.use(BoomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {

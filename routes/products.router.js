@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 //End Point para gestionar PATCH / actualizacion "parcial" de un producto
 //La diferencia entre PUT y PATCH es que con PUR deberiamos de actualizar TODOS los atributos del objeto
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const body = req.body;
     const { id } = req.params;
@@ -42,9 +42,7 @@ router.patch('/:id', async (req, res) => {
 
     res.json(product);
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    next(error);
   }
 });
 
