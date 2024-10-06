@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const routerApi = require('./routes');
 const {
@@ -8,6 +9,18 @@ const {
 } = require('./middlewares/error.handler');
 const port = 3000;
 app.use(express.json());
+
+const whitelist = ['http://localhost:8080', 'https://myapp.com']; //Estos son los dominios permitidos para hacer requests
+const options = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) !== 1) {
+      callback(null, true);
+    } else {
+      callback(new Error('NOT ALLOWED / NO PERMITIDO'));
+    }
+  },
+};
+
 app.get('/', (req, res) => {
   res.send('Servidor Express Conectado');
 });
@@ -16,6 +29,7 @@ app.get('/nueva-ruta', (req, res) => {
 });
 routerApi(app);
 
+app.use(cors(options));
 //Los Middleware de tipo ERROR, se deben de hacer despues de definir el ROUTING
 //Es importante considerar el orden en el que se van a ejecutar los Middlewares
 app.use(logErrors);
