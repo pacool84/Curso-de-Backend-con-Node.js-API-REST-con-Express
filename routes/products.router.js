@@ -1,5 +1,11 @@
 const express = require('express');
 const ProductsService = require('./../Services/product.service');
+const validatorHandler = require('./../middlewares/validator.handler');
+const {
+  createProductSchema,
+  updateProductSchema,
+  getProductSchema,
+} = require('./../schemas/product.schema');
 const router = express.Router(); //Generamos un router para tener acceso a la app
 const service = new ProductsService(); //Creamos una instancia del servicio
 
@@ -14,37 +20,50 @@ router.get('/filter', (req, res) => {
 });
 
 //Todos los parametros recibidos por el metodo GET, se recibiran como tipo STRING
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const product = await service.findOne(id);
-    res.json(product);
-  } catch (error) {
-    next(error); //Aqui hacemos de manera explicita que vaya y ejecute los Middlewares de tipo error
-  }
-});
+router.get(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const product = await service.findOne(id);
+      res.json(product);
+    } catch (error) {
+      next(error); //Aqui hacemos de manera explicita que vaya y ejecute los Middlewares de tipo error
+    }
+  },
+);
 
 //End Point para gestionar POST / Creacion de un producto
-router.post('/', async (req, res) => {
-  const body = req.body;
-  const newProduct = await service.create(body);
-  res.status(201).json(newProduct);
-});
+router.post(
+  '/',
+  validatorHandler(createProductSchema, 'body'),
+  async (req, res) => {
+    const body = req.body;
+    const newProduct = await service.create(body);
+    res.status(201).json(newProduct);
+  },
+);
 
 //End Point para gestionar PATCH / actualizacion "parcial" de un producto
 //La diferencia entre PUT y PATCH es que con PUR deberiamos de actualizar TODOS los atributos del objeto
 
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const body = req.body;
-    const { id } = req.params;
-    const product = await service.update(id, body);
+router.patch(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const { id } = req.params;
+      const product = await service.update(id, body);
 
-    res.json(product);
-  } catch (error) {
-    next(error);
-  }
-});
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 //End Point para gestionar DELETE
 
